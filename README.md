@@ -13,30 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Chandana20034/AI-Study-Assistant">📂 GitHub Repository</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-installation--setup">Installation</a> •
-  <a href="#-api-endpoints">API</a> •
-  <a href="#-contributing">Contributing</a>
+  <a href="https://friendly-lolly-26a977.netlify.app/">🚀 <b>Live Demo</b></a>
 </p>
 
 ---
-
-## 📋 Table of Contents
-
-- [About](#-about)
-- [Features](#-features)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Installation & Setup](#-installation--setup)
-- [API Endpoints](#-api-endpoints)
-- [Usage](#-usage)
-- [Configuration](#-configuration)
-- [Customization](#-customization)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Acknowledgments](#-acknowledgments)
 
 ---
 
@@ -357,25 +337,9 @@ python manage.py migrate
 Contributions are welcome! Here's how you can help:
 
 1. **Fork the repository**
-   ```bash
-   git clone https://github.com/Chandana20034/AI-Study-Assistant.git
-   ```
-
 2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-
 3. **Commit your changes**
-   ```bash
-   git commit -m 'Add some amazing feature'
-   ```
-
 4. **Push to the branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-
 5. **Open a Pull Request**
 
 ### 💡 Ideas for Contributions
