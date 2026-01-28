@@ -1,0 +1,93 @@
+/* ==========================================
+   Search Bar Styles
+   ========================================== */
+.navbar-search {
+    position: relative;
+    flex: 0 0 300px;
+    margin: 0 1rem;
+}
+
+.navbar-search input {
+    width: 100%;
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+}
+
+.navbar-search input:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.navbar-search i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.search-results {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.search-results.active {
+    display: block;
+}
+
+.search-result-item {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+}
+
+.search-result-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.search-result-item h4 {
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+    font-size: 0.95rem;
+}
+
+.search-result-item p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.search-result-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: var(--gradient-secondary);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}

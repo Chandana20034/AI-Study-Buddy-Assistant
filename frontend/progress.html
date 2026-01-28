@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your learning progress and performance metrics">
+    <title>Progress Tracker - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <div class="dashboard-container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-chart-line"></i> Progress Tracker</h1>
+            <p>Monitor your learning journey and celebrate your achievements</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="studyStreak">0</h3>
+                    <p>Day Streak</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="totalTime">0h</h3>
+                    <p>Total Study Time</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="completedSessions">0</h3>
+                    <p>Sessions Completed</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="averageScore">0%</h3>
+                    <p>Average Quiz Score</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <!-- Weekly Activity Chart -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-week"></i>
+                    Weekly Activity
+                </h2>
+                <canvas id="weeklyActivityChart"></canvas>
+            </div>
+
+            <!-- Performance Chart -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Feature Usage
+                </h2>
+                <canvas id="featureUsageChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Activity & Achievements -->
+        <div class="content-grid">
+            <!-- Recent Sessions -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    Recent Sessions
+                </h2>
+                <div id="recentSessions" class="sessions-list">
+                    <!-- Sessions will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-award"></i>
+                    Achievements
+                </h2>
+                <div id="achievementsList" class="achievements-grid">
+                    <!-- Achievements will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Performance History -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar"></i>
+                Quiz Performance Over Time
+            </h2>
+            <canvas id="quizPerformanceChart"></canvas>
+        </div>
+    </div>
+
+    <script src="js/navbar-search.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+
+</html>

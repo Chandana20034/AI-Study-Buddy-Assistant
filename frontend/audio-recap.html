@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recap - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <div class="page-header">
+            <h1><i class="fas fa-headphones"></i> Audio Recap</h1>
+            <p>Convert your notes into audio summaries for on-the-go learning</p>
+        </div>
+
+        <!-- Create Audio Recap -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-plus-circle"></i> Create Audio Recap</h2>
+            </div>
+            <div class="card-body">
+                <form id="audioRecapForm">
+                    <div class="form-group">
+                        <label for="recapTitle">
+                            <i class="fas fa-heading"></i> Title
+                        </label>
+                        <input type="text" id="recapTitle" placeholder="e.g., Chapter 5 Summary" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recapContent">
+                            <i class="fas fa-align-left"></i> Content to Convert
+                        </label>
+                        <textarea id="recapContent" rows="8" placeholder="Paste your notes or summary here..."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="voiceSelect">
+                            <i class="fas fa-user"></i> Voice
+                        </label>
+                        <select id="voiceSelect">
+                            <option value="default">Default Voice</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="speedSelect">
+                            <i class="fas fa-tachometer-alt"></i> Speed
+                        </label>
+                        <select id="speedSelect">
+                            <option value="0.75">0.75x (Slow)</option>
+                            <option value="1" selected>1x (Normal)</option>
+                            <option value="1.25">1.25x (Fast)</option>
+                            <option value="1.5">1.5x (Faster)</option>
+                            <option value="2">2x (Very Fast)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-magic"></i> Generate Audio Recap
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Audio Player -->
+        <div class="card" id="audioPlayerCard" style="display: none;">
+            <div class="card-header">
+                <h2><i class="fas fa-play-circle"></i> Audio Player</h2>
+                <button id="downloadAudio" class="btn-secondary btn-sm">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            <div class="card-body">
+                <div style="text-align: center; padding: 2rem;">
+                    <h3 id="currentRecapTitle" style="color: var(--text-primary); margin-bottom: 2rem;"></h3>
+
+                    <!-- Waveform Visualization -->
+                    <div
+                        style="background: rgba(15, 23, 42, 0.5); border-radius: 0.5rem; padding: 2rem; margin-bottom: 2rem;">
+                        <canvas id="waveform" width="600" height="100" style="width: 100%; max-width: 600px;"></canvas>
+                    </div>
+
+                    <!-- Playback Controls -->
+                    <div
+                        style="display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 2rem;">
+                        <button id="playPauseBtn" class="btn-primary"
+                            style="width: 60px; height: 60px; border-radius: 50%;">
+                            <i class="fas fa-play" style="font-size: 1.5rem;"></i>
+                        </button>
+                        <button id="stopBtn" class="btn-secondary"
+                            style="width: 50px; height: 50px; border-radius: 50%;">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div style="margin-bottom: 1rem;">
+                        <input type="range" id="progressBar" min="0" max="100" value="0"
+                            style="width: 100%; cursor: pointer;">
+                    </div>
+
+                    <!-- Time Display -->
+                    <div
+                        style="display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.9rem;">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+
+                    <!-- Speed Control -->
+                    <div
+                        style="margin-top: 2rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="speed-btn" data-speed="0.75">0.75x</button>
+                        <button class="speed-btn active" data-speed="1">1x</button>
+                        <button class="speed-btn" data-speed="1.25">1.25x</button>
+                        <button class="speed-btn" data-speed="1.5">1.5x</button>
+                        <button class="speed-btn" data-speed="2">2x</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Recaps -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-folder"></i> Saved Audio Recaps</h2>
+            </div>
+            <div class="card-body">
+                <div id="savedRecaps"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/navbar-search.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/audio-recap.js"></script>
+    <script src="js/theme-switcher.js"></script>
+
+    <style>
+        .speed-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--secondary-blue);
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .speed-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary-blue);
+        }
+
+        .speed-btn.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: white;
+        }
+
+        #progressBar {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        #progressBar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #progressBar::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</body>
+
+</html>

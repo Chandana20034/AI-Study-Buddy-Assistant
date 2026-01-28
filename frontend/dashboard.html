@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Study Assistant Dashboard - Your personalized learning hub">
+    <title>Dashboard - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header-enhancements.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <!-- Dashboard Wrapper with Sidebar -->
+    <div class="dashboard-wrapper">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <i class="fas fa-brain"></i>
+                <span>AI Study Assistant</span>
+            </div>
+
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="chat.html" class="sidebar-link">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="tutor.html" class="sidebar-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Tutor</span>
+                </a>
+                <a href="explainer.html" class="sidebar-link">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Explainer</span>
+                </a>
+                <a href="quiz.html" class="sidebar-link">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Quiz</span>
+                </a>
+                <a href="flashcards.html" class="sidebar-link">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Flashcards</span>
+                </a>
+                <a href="essay-grading.html" class="sidebar-link">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span>Essay</span>
+                </a>
+                <a href="live-lecture.html" class="sidebar-link">
+                    <i class="fas fa-microphone"></i>
+                    <span>Live Lecture</span>
+                </a>
+                <a href="audio-recap.html" class="sidebar-link">
+                    <i class="fas fa-headphones"></i>
+                    <span>Audio Recap</span>
+                </a>
+                <a href="arcade.html" class="sidebar-link">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Arcade</span>
+                </a>
+                <a href="links-manager.html" class="sidebar-link">
+                    <i class="fas fa-link"></i>
+                    <span>Links</span>
+                </a>
+                <a href="progress.html" class="sidebar-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="planner.html" class="sidebar-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Planner</span>
+                </a>
+            </nav>
+
+            <!-- User Profile Section -->
+            <div class="sidebar-user">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-avatar" id="sidebarUserAvatar">U</div>
+                    <div class="sidebar-user-details">
+                        <div class="sidebar-user-name" id="sidebarUserName">User</div>
+                        <div class="sidebar-user-email" id="sidebarUserEmail"></div>
+                    </div>
+                </div>
+                <button class="sidebar-logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Search Bar -->
+                <div class="navbar-search" style="max-width: 500px; margin: 0 auto; flex: 1;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="navbarSearch" placeholder="Search features...">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </header>
+
+            <!-- Dashboard Container -->
+            <div class="dashboard-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1>Welcome to Your Learning Dashboard</h1>
+                    <p>Choose a feature below to enhance your study experience</p>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="features-grid">
+                    <!-- AI Chat Card -->
+                    <div class="feature-card" onclick="window.location.href='chat.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>AI Chat</h3>
+                        <p>Have a conversation with your AI study assistant. Get instant help with any question.</p>
+                    </div>
+
+                    <!-- Tutor Me Card -->
+                    <div class="feature-card" onclick="window.location.href='tutor.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Tutor Me</h3>
+                        <p>Get step-by-step help with problems. AI-powered personalized tutoring for any subject.</p>
+                    </div>
+
+                    <!-- Concept Explainer Card -->
+                    <div class="feature-card" onclick="window.location.href='explainer.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Concept Explainer</h3>
+                        <p>Get complex topics explained in simple, easy-to-understand language.</p>
+                    </div>
+
+                    <!-- Notes Summarizer Card -->
+                    <div class="feature-card" onclick="window.location.href='summarizer.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Notes Summarizer</h3>
+                        <p>Upload your study notes or paste text to get concise summaries with key points.</p>
+                    </div>
+
+                    <!-- Photo Scanner Card -->
+                    <div class="feature-card" onclick="window.location.href='photo-scanner.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>Photo Scanner</h3>
+                        <p>Upload photos or use webcam to extract text, translate, and generate AI summaries.</p>
+                    </div>
+
+                    <!-- Quiz Generator Card -->
+                    <div class="feature-card" onclick="window.location.href='quiz.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>Quiz Generator</h3>
+                        <p>Generate multiple-choice quizzes to test your understanding and prepare for exams.</p>
+                    </div>
+
+                    <!-- Flashcards Card -->
+                    <div class="feature-card" onclick="window.location.href='flashcards.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3>Flashcards</h3>
+                        <p>Create interactive flashcards for quick revision and better retention.</p>
+                    </div>
+
+                    <!-- Essay Grading Card -->
+                    <div class="feature-card" onclick="window.location.href='essay-grading.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h3>Essay Grading</h3>
+                        <p>Get AI-powered feedback on your essays with detailed grading and suggestions.</p>
+                    </div>
+
+                    <!-- Live Lecture Card -->
+                    <div class="feature-card" onclick="window.location.href='live-lecture.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3>Live Lecture</h3>
+                        <p>Record lectures in real-time with AI-powered transcription and notes.</p>
+                    </div>
+
+                    <!-- Audio Recap Card -->
+                    <div class="feature-card" onclick="window.location.href='audio-recap.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3>Audio Recap</h3>
+                        <p>Convert your study materials to audio for learning on the go.</p>
+                    </div>
+
+                    <!-- Arcade Card -->
+                    <div class="feature-card" onclick="window.location.href='arcade.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Arcade</h3>
+                        <p>Learn through fun games! Earn points and badges while studying.</p>
+                    </div>
+
+                    <!-- Links Manager Card -->
+                    <div class="feature-card" onclick="window.location.href='links-manager.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3>Links Manager</h3>
+                        <p>Save and organize all your study resources and URLs in one place.</p>
+                    </div>
+
+                    <!-- Progress Tracker Card -->
+                    <div class="feature-card" onclick="window.location.href='progress.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Progress Tracker</h3>
+                        <p>Monitor your learning journey with detailed stats, charts, and achievements.</p>
+                    </div>
+
+                    <!-- Study Planner Card -->
+                    <div class="feature-card" onclick="window.location.href='planner.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Study Planner</h3>
+                        <p>Organize your schedule, set goals, and manage reminders efficiently.</p>
+                    </div>
+
+                    <!-- History Card -->
+                    <div class="feature-card" onclick="window.location.href='history.html'">
+                        <div class="feature-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>History</h3>
+                        <p>View, access, and manage all your previous study activities and sessions.</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Activity Detail Modal -->
+    <div class="modal" id="activityModal"
+        style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-xl); padding: 2rem; max-width: 800px; max-height: 80vh; overflow-y: auto; width: 90%;">
+            <div class="modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 id="activityModalTitle" style="margin: 0; font-family: 'Poppins', sans-serif;">Activity Details</h2>
+                <button class="modal-close" onclick="closeActivityModal()"
+                    style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--transition-normal);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="activityModalBody" style="color: var(--text-primary); line-height: 1.8;">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/navbar-search.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+
+</html>

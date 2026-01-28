@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plan your study schedule and set learning goals">
+    <title>Study Planner - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <div class="dashboard-container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-calendar-alt"></i> Study Planner</h1>
+            <p>Organize your learning schedule and achieve your goals</p>
+        </div>
+
+        <!-- Goals Section -->
+        <div class="glass-card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 class="section-title">
+                    <i class="fas fa-bullseye"></i>
+                    My Goals
+                </h2>
+                <button class="btn btn-primary" onclick="showAddGoalModal()"
+                    style="width: auto; padding: 0.7rem 1.5rem;">
+                    <i class="fas fa-plus"></i> Add Goal
+                </button>
+            </div>
+            <div id="goalsList" class="goals-list">
+                <!-- Goals will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Calendar and Schedule Section -->
+        <div class="content-grid">
+            <!-- Calendar -->
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">
+                        <i class="fas fa-calendar"></i>
+                        <span id="currentMonth">Calendar</span>
+                    </h2>
+                    <div class="calendar-nav">
+                        <button onclick="previousMonth()" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="nextMonth()" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="calendar" class="calendar-grid">
+                    <!-- Calendar will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Daily Schedule -->
+            <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Schedule for <span id="selectedDate">Today</span>
+                    </h2>
+                    <button class="btn btn-primary" onclick="showAddEventModal()"
+                        style="width: auto; padding: 0.7rem 1.5rem;">
+                        <i class="fas fa-plus"></i> Add Event
+                    </button>
+                </div>
+                <div id="scheduleList" class="schedule-list">
+                    <!-- Schedule items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reminders Section -->
+        <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 class="section-title">
+                    <i class="fas fa-bell"></i>
+                    Upcoming Reminders
+                </h2>
+                <button class="btn btn-primary" onclick="showAddReminderModal()"
+                    style="width: auto; padding: 0.7rem 1.5rem;">
+                    <i class="fas fa-plus"></i> Add Reminder
+                </button>
+            </div>
+            <div id="remindersList" class="reminders-list">
+                <!-- Reminders will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bullseye"></i> Add New Goal</h3>
+                <button class="modal-close" onclick="closeGoalModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Goal Title</label>
+                    <input type="text" id="goalTitle" class="form-input" placeholder="e.g., Master Calculus">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="goalDescription" class="form-input" rows="3"
+                        placeholder="Describe your goal..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Target Date</label>
+                    <input type="date" id="goalDate" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="goalCategory" class="form-input">
+                        <option value="academic">Academic</option>
+                        <option value="skill">Skill Development</option>
+                        <option value="exam">Exam Preparation</option>
+                        <option value="personal">Personal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeGoalModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addGoal()">Add Goal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-plus"></i> Add Schedule Event</h3>
+                <button class="modal-close" onclick="closeEventModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Event Title</label>
+                    <input type="text" id="eventTitle" class="form-input" placeholder="e.g., Math Lecture">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="eventDate" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" id="eventTime" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Duration (minutes)</label>
+                    <input type="number" id="eventDuration" class="form-input" value="60" min="15" step="15">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="eventType" class="form-input">
+                        <option value="lecture">Lecture</option>
+                        <option value="study">Study Session</option>
+                        <option value="exam">Exam</option>
+                        <option value="assignment">Assignment</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEventModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addEvent()">Add Event</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Reminder Modal -->
+    <div id="reminderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bell"></i> Add Reminder</h3>
+                <button class="modal-close" onclick="closeReminderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Reminder Text</label>
+                    <input type="text" id="reminderText" class="form-input"
+                        placeholder="What do you want to be reminded about?">
+                </div>
+                <div class="form-group">
+                    <label>Date & Time</label>
+                    <input type="datetime-local" id="reminderDateTime" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="reminderPriority" class="form-input">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeReminderModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addReminder()">Add Reminder</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/navbar-search.js"></script>
+    <script src="js/planner.js"></script>
+    <script src="js/theme-switcher.js"></script>
+</body>
+
+</html>

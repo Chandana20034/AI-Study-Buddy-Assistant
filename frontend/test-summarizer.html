@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summarizer Debug Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #60a5fa;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .test-section {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .test-section h2 {
+            color: #f472b6;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .console-output {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .console-output .log {
+            color: #94a3b8;
+            margin: 0.25rem 0;
+        }
+
+        .console-output .success {
+            color: #22c55e;
+        }
+
+        .console-output .error {
+            color: #ef4444;
+        }
+
+        .console-output .info {
+            color: #60a5fa;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(236, 72, 153, 0.3);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #e2e8f0;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            resize: vertical;
+        }
+
+        .file-input {
+            margin: 1rem 0;
+        }
+
+        input[type="file"] {
+            padding: 0.5rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #e2e8f0;
+        }
+
+        .result-box {
+            background: #0f172a;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h3 {
+            color: #22c55e;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .key-points li {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-left: 3px solid #60a5fa;
+            padding-left: 1rem;
+            background: rgba(96, 165, 250, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Summarizer Debug & Test Page</h1>
+
+        <!-- Test 1: Check if scripts are loaded -->
+        <div class="test-section">
+            <h2>Test 1: Script Loading Check</h2>
+            <button onclick="checkScripts()">Check if Scripts are Loaded</button>
+            <div id="script-output" class="console-output"></div>
+        </div>
+
+        <!-- Test 2: Test with sample text -->
+        <div class="test-section">
+            <h2>Test 2: Summarize Sample Text</h2>
+            <button onclick="testSampleText()">Test with Sample Text</button>
+            <div id="sample-output" class="console-output"></div>
+            <div id="sample-result" class="result-box"></div>
+        </div>
+
+        <!-- Test 3: Test with custom text -->
+        <div class="test-section">
+            <h2>Test 3: Summarize Your Text</h2>
+            <textarea id="customText" placeholder="Paste your text here...">Photosynthesis is the process by which plants convert light energy into chemical energy. This process occurs in the chloroplasts of plant cells and involves two main stages: the light-dependent reactions and the light-independent reactions (Calvin cycle). During the light-dependent reactions, chlorophyll absorbs light energy which is used to split water molecules, releasing oxygen as a byproduct. The light-independent reactions use the energy from the first stage to convert carbon dioxide into glucose. This process is essential for life on Earth as it produces oxygen and forms the base of most food chains.</textarea>
+            <br>
+            <button onclick="testCustomText()">Summarize This Text</button>
+            <div id="custom-output" class="console-output"></div>
+            <div id="custom-result" class="result-box"></div>
+        </div>
+
+        <!-- Test 4: Test PDF upload -->
+        <div class="test-section">
+            <h2>Test 4: PDF Upload Test</h2>
+            <div class="file-input">
+                <input type="file" id="pdfFile" accept=".pdf" onchange="testPDFUpload()">
+            </div>
+            <div id="pdf-output" class="console-output"></div>
+            <div id="pdf-result" class="result-box"></div>
+        </div>
+    </div>
+
+    <!-- Load required scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/client-ai.js"></script>
+
+    <script>
+        // Helper function to log to console output
+        function logToConsole(elementId, message, type = 'log') {
+            const output = document.getElementById(elementId);
+            const logEntry = document.createElement('div');
+            logEntry.className = `log ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(logEntry);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Test 1: Check if scripts are loaded
+        function checkScripts() {
+            const output = document.getElementById('script-output');
+            output.innerHTML = '';
+
+            logToConsole('script-output', 'Checking script dependencies...', 'info');
+
+            // Check utils.js
+            if (typeof showNotification !== 'undefined') {
+                logToConsole('script-output', '✓ utils.js loaded - showNotification found', 'success');
+            } else {
+                logToConsole('script-output', '✗ utils.js NOT loaded - showNotification missing', 'error');
+            }
+
+            // Check client-ai.js
+            if (typeof window.clientAI !== 'undefined') {
+                logToConsole('script-output', '✓ client-ai.js loaded - clientAI found', 'success');
+            } else {
+                logToConsole('script-output', '✗ client-ai.js NOT loaded - clientAI missing', 'error');
+            }
+
+            // Check if summarizeText method exists
+            if (window.clientAI && typeof window.clientAI.summarizeText === 'function') {
+                logToConsole('script-output', '✓ summarizeText method available', 'success');
+            } else {
+                logToConsole('script-output', '✗ summarizeText method NOT available', 'error');
+            }
+
+            logToConsole('script-output', 'Check complete!', 'info');
+        }
+
+        // Test 2: Test with sample text
+        async function testSampleText() {
+            const output = document.getElementById('sample-output');
+            const resultBox = document.getElementById('sample-result');
+            output.innerHTML = '';
+            resultBox.classList.remove('show');
+
+            const sampleText = "Artificial Intelligence is transforming the way we live and work. Machine learning algorithms can now recognize patterns in data, make predictions, and even create new content. Deep learning, a subset of machine learning, uses neural networks inspired by the human brain. These technologies are being applied in healthcare, finance, transportation, and many other fields. However, AI also raises important ethical questions about privacy, bias, and the future of work.";
+
+            logToConsole('sample-output', 'Starting summarization test...', 'info');
+            logToConsole('sample-output', `Text length: ${sampleText.length} characters`, 'log');
+
+            try {
+                logToConsole('sample-output', 'Calling clientAI.summarizeText()...', 'info');
+                const result = await window.clientAI.summarizeText(sampleText);
+                
+                logToConsole('sample-output', '✓ Summarization successful!', 'success');
+                logToConsole('sample-output', `Summary length: ${result.summary.length} characters`, 'log');
+                logToConsole('sample-output', `Key points: ${result.key_points.length} items`, 'log');
+
+                // Display result
+                displayResult('sample-result', result);
+            } catch (error) {
+                logToConsole('sample-output', `✗ Error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+
+        // Test 3: Test with custom text
+        async function testCustomText() {
+            const output = document.getElementById('custom-output');
+            const resultBox = document.getElementById('custom-result');
+            const text = document.getElementById('customText').value.trim();
+            
+            output.innerHTML = '';
+            resultBox.classList.remove('show');
+
+            if (!text) {
+                logToConsole('custom-output', '✗ Please enter some text', 'error');
+                return;
+            }
+
+            logToConsole('custom-output', 'Starting summarization...', 'info');
+            logToConsole('custom-output', `Text length: ${text.length} characters`, 'log');
+
+            try {
+                const result = await window.clientAI.summarizeText(text);
+                logToConsole('custom-output', '✓ Summarization successful!', 'success');
+                displayResult('custom-result', result);
+            } catch (error) {
+                logToConsole('custom-output', `✗ Error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+
+        // Test 4: Test PDF upload
+        async function testPDFUpload() {
+            const output = document.getElementById('pdf-output');
+            const resultBox = document.getElementById('pdf-result');
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+
+            output.innerHTML = '';
+            resultBox.classList.remove('show');
+
+            if (!file) {
+                logToConsole('pdf-output', '✗ No file selected', 'error');
+                return;
+            }
+
+            logToConsole('pdf-output', `File selected: ${file.name}`, 'info');
+            logToConsole('pdf-output', `File size: ${(file.size / 1024).toFixed(2)} KB`, 'log');
+            logToConsole('pdf-output', `File type: ${file.type}`, 'log');
+
+            try {
+                // Load PDF.js
+                logToConsole('pdf-output', 'Loading PDF.js library...', 'info');
+                
+                if (typeof pdfjsLib === 'undefined') {
+                    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    logToConsole('pdf-output', '✓ PDF.js loaded successfully', 'success');
+                }
+
+                // Extract text
+                logToConsole('pdf-output', 'Extracting text from PDF...', 'info');
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                
+                logToConsole('pdf-output', `PDF has ${pdf.numPages} pages`, 'log');
+
+                let fullText = '';
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + '\n\n';
+                    logToConsole('pdf-output', `Extracted page ${pageNum}/${pdf.numPages}`, 'log');
+                }
+
+                logToConsole('pdf-output', '✓ Text extraction complete', 'success');
+                logToConsole('pdf-output', `Total text length: ${fullText.length} characters`, 'log');
+
+                // Summarize
+                logToConsole('pdf-output', 'Generating summary...', 'info');
+                const result = await window.clientAI.summarizeText(fullText.trim());
+                logToConsole('pdf-output', '✓ Summary generated!', 'success');
+
+                displayResult('pdf-result', result);
+
+            } catch (error) {
+                logToConsole('pdf-output', `✗ Error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+
+        // Helper to display results
+        function displayResult(elementId, result) {
+            const resultBox = document.getElementById(elementId);
+            
+            const keyPointsHTML = result.key_points.map(point => 
+                `<li>${point}</li>`
+            ).join('');
+
+            resultBox.innerHTML = `
+                <h3>📝 Summary</h3>
+                <p style="line-height: 1.8; margin-bottom: 1.5rem;">${result.summary}</p>
+                
+                <h3>⭐ Key Points</h3>
+                <ul class="key-points">
+                    ${keyPointsHTML}
+                </ul>
+            `;
+            
+            resultBox.classList.add('show');
+        }
+
+        // Auto-run script check on load
+        window.addEventListener('load', () => {
+            setTimeout(checkScripts, 500);
+        });
+    </script>
+</body>
+</html>

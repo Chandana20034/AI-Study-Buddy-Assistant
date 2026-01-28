@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Smart Study Assistant - Login and Registration">
+    <title>Login - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="particle" style="width: 4px; height: 4px; left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 6px; height: 6px; left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 3px; height: 3px; left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 5px; height: 5px; left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="width: 4px; height: 4px; left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="width: 6px; height: 6px; left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="width: 3px; height: 3px; left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="width: 5px; height: 5px; left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="width: 4px; height: 4px; left: 90%; animation-delay: 1.5s;"></div>
+    </div>
+
+    <!-- Authentication Container -->
+    <div class="auth-container">
+        <!-- Login Form -->
+        <div class="auth-card" id="loginCard">
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to continue your learning journey</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password"
+                            required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-bottom: 1rem;">
+                    <a href="#" id="showForgotPassword"
+                        style="color: var(--secondary-blue); text-decoration: none; font-size: 0.9rem;">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="auth-toggle">
+                Don't have an account? <a href="#" id="showRegister">Register</a>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-card hidden" id="registerCard">
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join thousands of students learning smarter</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="registerName" class="form-input" placeholder="Enter your full name"
+                            required>
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="registerEmail" class="form-input" placeholder="Enter your email"
+                            required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="registerPassword" class="form-input"
+                            placeholder="Create a strong password (min 6 characters)" required minlength="6">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; display: block;">
+                        Use 8+ characters with uppercase, lowercase, numbers & symbols
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerRole">Select a role (optional)</label>
+                    <div class="input-wrapper">
+                        <select id="registerRole" class="form-input">
+                            <option value="">Choose your role</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="professional">Professional</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Register
+                </button>
+            </form>
+
+            <div class="auth-toggle">
+                Already have an account? <a href="#" id="showLogin">Login</a>
+            </div>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="auth-card hidden" id="forgotPasswordCard">
+            <div class="auth-header">
+                <h1>Reset Password</h1>
+                <p>Enter your email to receive a password reset link</p>
+            </div>
+
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label for="forgotEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="forgotEmail" class="form-input"
+                            placeholder="Enter your registered email" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Send Reset Link
+                </button>
+            </form>
+
+            <div class="auth-toggle">
+                Remember your password? <a href="#" id="showLogin2">Login</a>
+            </div>
+        </div>
+
+        <!-- Reset Password Form (shown when user clicks reset link) -->
+        <div class="auth-card hidden" id="resetPasswordCard">
+            <div class="auth-header">
+                <h1>Create New Password</h1>
+                <p>Enter your new password below</p>
+            </div>
+
+            <form id="resetPasswordForm">
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="newPassword" class="form-input" placeholder="Enter new password"
+                            required minlength="6">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirmPassword" class="form-input"
+                            placeholder="Confirm new password" required minlength="6">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Reset Password
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

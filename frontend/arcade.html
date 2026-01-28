@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Arcade - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <div class="page-header">
+            <h1><i class="fas fa-gamepad"></i> Learning Arcade</h1>
+            <p>Make learning fun with interactive educational games</p>
+        </div>
+
+        <!-- Game Selection -->
+        <div class="card" id="gameSelection">
+            <div class="card-header">
+                <h2><i class="fas fa-trophy"></i> Choose Your Game</h2>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="color: var(--text-secondary);">
+                        <i class="fas fa-star"></i> Score: <span id="totalScore">0</span>
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <!-- Memory Match Game -->
+                    <div class="game-card" onclick="startGame('memory')">
+                        <div class="game-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Memory Match</h3>
+                        <p>Match pairs of study terms and definitions</p>
+                        <div class="game-stats">
+                            <span><i class="fas fa-play-circle"></i> Played: <span id="memoryPlayed">0</span></span>
+                            <span><i class="fas fa-trophy"></i> Best: <span id="memoryBest">0</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Speed Quiz Game -->
+                    <div class="game-card" onclick="startGame('speedquiz')">
+                        <div class="game-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Speed Quiz</h3>
+                        <p>Answer questions as fast as you can</p>
+                        <div class="game-stats">
+                            <span><i class="fas fa-play-circle"></i> Played: <span id="quizPlayed">0</span></span>
+                            <span><i class="fas fa-trophy"></i> Best: <span id="quizBest">0</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Word Scramble Game -->
+                    <div class="game-card" onclick="startGame('scramble')">
+                        <div class="game-icon">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <h3>Word Scramble</h3>
+                        <p>Unscramble key terms and concepts</p>
+                        <div class="game-stats">
+                            <span><i class="fas fa-play-circle"></i> Played: <span id="scramblePlayed">0</span></span>
+                            <span><i class="fas fa-trophy"></i> Best: <span id="scrambleBest">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory Match Game -->
+        <div class="card" id="memoryGame" style="display: none;">
+            <div class="card-header">
+                <h2><i class="fas fa-brain"></i> Memory Match</h2>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="color: var(--text-secondary);">Moves: <span id="moves">0</span></span>
+                    <span style="color: var(--text-secondary);">Matches: <span id="matches">0</span>/8</span>
+                    <button onclick="backToGames()" class="btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="memoryBoard"
+                    style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 600px; margin: 0 auto;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Speed Quiz Game -->
+        <div class="card" id="speedQuizGame" style="display: none;">
+            <div class="card-header">
+                <h2><i class="fas fa-bolt"></i> Speed Quiz</h2>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="color: var(--text-secondary);">Time: <span id="quizTimer">30</span>s</span>
+                    <span style="color: var(--text-secondary);">Score: <span id="quizScore">0</span></span>
+                    <button onclick="backToGames()" class="btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="quizQuestion" style="text-align: center; padding: 2rem;">
+                    <h3 id="questionText" style="color: var(--text-primary); margin-bottom: 2rem; font-size: 1.5rem;">
+                    </h3>
+                    <div id="quizOptions" style="display: grid; gap: 1rem; max-width: 500px; margin: 0 auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Word Scramble Game -->
+        <div class="card" id="scrambleGame" style="display: none;">
+            <div class="card-header">
+                <h2><i class="fas fa-random"></i> Word Scramble</h2>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="color: var(--text-secondary);">Level: <span id="scrambleLevel">1</span></span>
+                    <span style="color: var(--text-secondary);">Score: <span id="scrambleScore">0</span></span>
+                    <button onclick="backToGames()" class="btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="text-align: center; padding: 2rem;">
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Unscramble the word:</p>
+                    <h2 id="scrambledWord"
+                        style="color: var(--secondary-blue); font-size: 2.5rem; margin-bottom: 2rem; letter-spacing: 0.5rem;">
+                    </h2>
+                    <input type="text" id="scrambleInput" placeholder="Type your answer..."
+                        style="max-width: 400px; margin: 0 auto 1rem; display: block; text-align: center; font-size: 1.2rem;">
+                    <button onclick="checkScramble()" class="btn-primary">
+                        <i class="fas fa-check"></i> Submit Answer
+                    </button>
+                    <p id="scrambleHint" style="color: var(--text-muted); margin-top: 1rem; font-style: italic;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-medal"></i> Leaderboard</h2>
+            </div>
+            <div class="card-body">
+                <div id="leaderboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/navbar-search.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/arcade.js"></script>
+    <script src="js/theme-switcher.js"></script>
+
+    <style>
+        /* Additional inline styles removed - now using advanced-features.css */
+        .game-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-blue);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .game-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .game-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .game-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary-blue);
+        }
+
+        .memory-card.flipped {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .memory-card.matched {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: #22c55e;
+            cursor: default;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .quiz-option:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary-blue);
+        }
+
+        .quiz-option.correct {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: #22c55e;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+    </style>
+</body>
+
+</html>

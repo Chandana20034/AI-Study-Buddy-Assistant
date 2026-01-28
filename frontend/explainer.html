@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Concept Explainer - Get complex topics explained simply">
+    <title>Concept Explainer - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="animated-background"></div>
+
+    <div class="dashboard-container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="content-container">
+            <div class="page-header">
+                <h1><i class="fas fa-lightbulb"></i> Concept Explainer</h1>
+                <p>Enter any topic or concept, and get it explained in simple, easy-to-understand language</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-keyboard"></i>
+                        Enter Your Topic
+                    </h2>
+
+                    <form id="explainerForm">
+                        <div class="form-group">
+                            <label for="topicInput">Topic or Concept</label>
+                            <input type="text" id="topicInput" class="form-input"
+                                placeholder="e.g., Photosynthesis, Quantum Physics, Machine Learning">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="detailsInput">Additional Details (Optional)</label>
+                            <textarea id="detailsInput" class="form-input"
+                                placeholder="Add any specific questions or areas you want explained..."
+                                rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> Explain Concept
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Output Section -->
+                <div class="output-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-book-open"></i>
+                        Explanation
+                    </h2>
+
+                    <div id="explanationOutput" class="output-content">
+                        <p style="color: var(--text-muted); text-align: center;">
+                            <i class="fas fa-info-circle"
+                                style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                            Your explanation will appear here once you submit a topic
+                        </p>
+                    </div>
+
+                    <button id="saveExplanation" class="btn btn-secondary mt-2 hidden">
+                        <i class="fas fa-save"></i> Save Explanation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/explainer.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/navbar-search.js"></script>
+</body>
+
+</html>

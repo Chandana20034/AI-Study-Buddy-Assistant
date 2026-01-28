@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links Manager - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <div class="page-header">
+            <h1><i class="fas fa-link"></i> Links Manager</h1>
+            <p>Save and organize all your study resources in one place</p>
+        </div>
+
+        <!-- Add Link Form -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-plus-circle"></i> Add New Link</h2>
+            </div>
+            <div class="card-body">
+                <form id="addLinkForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="linkTitle">
+                                <i class="fas fa-heading"></i> Title *
+                            </label>
+                            <input type="text" id="linkTitle" placeholder="e.g., Python Documentation" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkUrl">
+                                <i class="fas fa-globe"></i> URL *
+                            </label>
+                            <input type="url" id="linkUrl" placeholder="https://example.com" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="linkCategory">
+                                <i class="fas fa-folder"></i> Category
+                            </label>
+                            <select id="linkCategory">
+                                <option value="Documentation">📚 Documentation</option>
+                                <option value="Tutorial">🎓 Tutorial</option>
+                                <option value="Video">🎥 Video</option>
+                                <option value="Article">📄 Article</option>
+                                <option value="Tool">🔧 Tool</option>
+                                <option value="Reference">📖 Reference</option>
+                                <option value="Course">🏫 Course</option>
+                                <option value="Other">📌 Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkTags">
+                                <i class="fas fa-tags"></i> Tags (comma-separated)
+                            </label>
+                            <input type="text" id="linkTags" placeholder="e.g., python, programming, beginner">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkDescription">
+                            <i class="fas fa-align-left"></i> Description
+                        </label>
+                        <textarea id="linkDescription" rows="3"
+                            placeholder="Brief description of this resource..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Save Link
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Filter & Search -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-filter"></i> Filter Links</h2>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="filterCategory">
+                            <i class="fas fa-folder"></i> Category
+                        </label>
+                        <select id="filterCategory">
+                            <option value="">All Categories</option>
+                            <option value="Documentation">📚 Documentation</option>
+                            <option value="Tutorial">🎓 Tutorial</option>
+                            <option value="Video">🎥 Video</option>
+                            <option value="Article">📄 Article</option>
+                            <option value="Tool">🔧 Tool</option>
+                            <option value="Reference">📖 Reference</option>
+                            <option value="Course">🏫 Course</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="searchLinks">
+                            <i class="fas fa-search"></i> Search
+                        </label>
+                        <input type="text" id="searchLinks" placeholder="Search by title, URL, or tags...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sortLinks">
+                            <i class="fas fa-sort"></i> Sort By
+                        </label>
+                        <select id="sortLinks">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="title">Title (A-Z)</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Links List -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-bookmark"></i> Saved Links</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="exportLinks" class="btn-secondary btn-sm">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <button id="importLinks" class="btn-secondary btn-sm">
+                        <i class="fas fa-upload"></i> Import
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="linksList"></div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-chart-pie"></i> Statistics</h2>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalLinks">0</h3>
+                            <p>Total Links</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCategories">0</h3>
+                            <p>Categories</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalTags">0</h3>
+                            <p>Unique Tags</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="linksThisWeek">0</h3>
+                            <p>Added This Week</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".json" style="display: none;">
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/navbar-search.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/links-manager.js"></script>
+    <script src="js/theme-switcher.js"></script>
+
+    <style>
+        .stat-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .stat-info p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .link-item {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            border-color: var(--secondary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .link-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .link-url {
+            color: var(--secondary-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .link-url:hover {
+            text-decoration: underline;
+        }
+
+        .link-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .link-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: var(--secondary-blue);
+        }
+
+        .link-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: var(--secondary-pink);
+        }
+
+        .link-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Summary Modal Styles */
+        .summary-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .summary-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .summary-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        .summary-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+
+        .summary-content {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .summary-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .summary-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .summary-content::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 4px;
+        }
+
+        .summary-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.7);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>

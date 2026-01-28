@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Chat - Get instant help with your studies">
+    <title>AI Chat - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chat-page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .full-chat-window {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            height: calc(100vh - 250px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header-full {
+            padding: 1.5rem;
+            background: var(--gradient-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-messages-full {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-input-full {
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .chat-input-full textarea {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            max-height: 150px;
+        }
+
+        .chat-input-full textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+        }
+
+        .send-btn-large {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .send-btn-large:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <div class="dashboard-container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-comments"></i> AI Chat Assistant</h1>
+            <p>Have a conversation with your AI study assistant</p>
+        </div>
+
+        <!-- Full Chat Interface -->
+        <div class="chat-page-container">
+            <div class="full-chat-window">
+                <div class="chat-header-full">
+                    <h2 style="margin: 0; color: white; font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-robot"></i> AI Study Assistant
+                    </h2>
+                    <p style="margin: 0.5rem 0 0 0; color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                        Ask me anything about your studies!
+                    </p>
+                </div>
+
+                <div class="chat-messages-full" id="chatMessagesPage">
+                    <div class="chat-message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Hi! I'm your AI Study Assistant. How can I help you today?</p>
+                            <div class="quick-actions">
+                                <button class="quick-action"
+                                    onclick="sendQuickMessage('Explain a concept to me')">Explain a topic</button>
+                                <button class="quick-action"
+                                    onclick="sendQuickMessage('Help me summarize my notes')">Summarize text</button>
+                                <button class="quick-action" onclick="sendQuickMessage('Create a quiz for me')">Create a
+                                    quiz</button>
+                                <button class="quick-action"
+                                    onclick="sendQuickMessage('What can you help me with?')">Get help</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-full">
+                    <textarea id="chatInputPage" placeholder="Type your message here..." rows="1"></textarea>
+                    <button class="send-btn-large" onclick="sendMessagePage()">
+                        <i class="fas fa-paper-plane" style="color: white; font-size: 1.2rem;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messages = [];
+
+        // Auto-resize textarea
+        document.getElementById('chatInputPage').addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+        });
+
+        // Send message on Enter
+        document.getElementById('chatInputPage').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessagePage();
+            }
+        });
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatInputPage').value = message;
+            sendMessagePage();
+        }
+
+        async function sendMessagePage() {
+            const input = document.getElementById('chatInputPage');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            addMessageToPage(message, 'user');
+            input.value = '';
+            input.style.height = 'auto';
+
+            showTypingIndicatorPage();
+
+            try {
+                // Use client-side AI service
+                const response = await window.clientAI.chatResponse(message, messages.slice(-10));
+                hideTypingIndicatorPage();
+                addMessageToPage(response, 'bot');
+            } catch (error) {
+                console.error('Chat error:', error);
+                hideTypingIndicatorPage();
+                addMessageToPage('Sorry, I encountered an error. Please try again.', 'bot');
+            }
+        }
+
+        function addMessageToPage(text, sender) {
+            const container = document.getElementById('chatMessagesPage');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message fade-in`;
+
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>${formatMessage(text)}</p>
+                        <span class="message-time">${getTime()}</span>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${escapeHtml(text)}</p>
+                        <span class="message-time">${getTime()}</span>
+                    </div>
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+            }
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+
+            messages.push({ text, sender, timestamp: new Date().toISOString() });
+        }
+
+        function showTypingIndicatorPage() {
+            const container = document.getElementById('chatMessagesPage');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot-message typing-indicator';
+            typingDiv.id = 'typingIndicatorPage';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function hideTypingIndicatorPage() {
+            const indicator = document.getElementById('typingIndicatorPage');
+            if (indicator) indicator.remove();
+        }
+
+        function formatMessage(text) {
+            text = escapeHtml(text);
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            text = text.replace(/\n/g, '<br>');
+            return text;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        // Check authentication
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        if (!user) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('userName').textContent = user.name || 'Student';
+            document.getElementById('userAvatar').textContent = (user.name || 'Student')[0].toUpperCase();
+        }
+    </script>
+    <script src="js/utils.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/navbar-search.js"></script>
+</body>
+
+</html>

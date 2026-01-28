@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Notes Summarizer - Get concise summaries of your study materials">
+    <title>Notes Summarizer - AI Study Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="animated-background"></div>
+
+    <div class="dashboard-container">
+        <!-- Back Button -->
+        <a href="dashboard.html" class="back-button"
+            style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 1rem; padding: 0.5rem 1rem; background: rgba(30, 41, 59, 0.6); border-radius: var(--radius-md); transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Bar -->
+        <div class="navbar-search" style="max-width: 500px; margin: 1rem auto;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="navbarSearch" placeholder="Search features...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="content-container">
+            <div class="page-header">
+                <h1><i class="fas fa-file-alt"></i> Notes Summarizer</h1>
+                <p>Upload your notes or paste text to get concise summaries with key points</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-upload"></i>
+                        Upload or Paste Notes
+                    </h2>
+
+                    <!-- Enhanced File Upload with Drag & Drop -->
+                    <div class="file-upload-container" id="fileUploadContainer">
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3 style="color: var(--text-primary); margin: 1rem 0 0.5rem;">
+                                Drop your file here or click to browse
+                            </h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                Supports PDF, TXT, and Images (JPG, PNG, WEBP) - Max 10MB
+                            </p>
+                            <input type="file" id="fileInput" accept=".pdf,.txt,.jpg,.jpeg,.png,.webp,image/*"
+                                style="display: none;">
+                            <button type="button" class="btn-browse" id="browseButton">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                        </div>
+
+                        <!-- File Info Display -->
+                        <div class="file-info" id="fileInfo" style="display: none;">
+                            <div class="file-details">
+                                <i class="fas fa-file-alt file-icon"></i>
+                                <div class="file-text">
+                                    <p class="file-name" id="fileName"></p>
+                                    <p class="file-size" id="fileSize"></p>
+                                </div>
+                                <button type="button" class="btn-remove" id="removeFile">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="progress-bar" id="progressBar" style="display: none;">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <p class="status-text" id="statusText"></p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; color: var(--text-muted); margin: 1.5rem 0; font-weight: 500;">
+                        - OR -
+                    </div>
+
+                    <!-- Text Input -->
+                    <form id="summarizerForm">
+                        <div class="form-group">
+                            <label for="notesInput"
+                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-keyboard"></i> Paste Your Notes
+                            </label>
+                            <textarea id="notesInput" class="form-input"
+                                placeholder="Paste your study notes here and click Generate Summary..."
+                                rows="8"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="generateButton">
+                            <i class="fas fa-magic"></i> Generate Summary
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Output Section -->
+                <div class="output-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-list-ul"></i>
+                        Summary & Key Points
+                    </h2>
+
+                    <div id="summaryOutput" class="output-content">
+                        <p style="color: var(--text-muted); text-align: center;">
+                            <i class="fas fa-info-circle"
+                                style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                            Your summary will appear here once you upload or paste your notes
+                        </p>
+                    </div>
+
+                    <button id="saveSummary" class="btn btn-secondary mt-2 hidden">
+                        <i class="fas fa-save"></i> Save Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/ocr-processor.js"></script>
+    <script src="js/translator.js"></script>
+    <script src="js/client-ai.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/summarizer.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/navbar-search.js"></script>
+</body>
+
+</html>
